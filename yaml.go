@@ -405,16 +405,21 @@ type Node struct {
 	// FootComment holds any comments following the node and before empty lines.
 	FootComment string
 
-	// Line and Column hold the node position in the decoded YAML text.
+	// Holds the node's start/end positions in the decoded YAML text.
 	// These fields are not respected when encoding the node.
-	Line   int
-	Column int
+	StartIndex  int
+	StartLine   int
+	StartColumn int
+	EndIndex    int
+	EndLine     int
+	EndColumn   int
 }
 
 // IsZero returns whether the node has all of its fields unset.
 func (n *Node) IsZero() bool {
 	return n.Kind == 0 && n.Style == 0 && n.Tag == "" && n.Value == "" && n.Anchor == "" && n.Alias == nil && n.Content == nil &&
-		n.HeadComment == "" && n.LineComment == "" && n.FootComment == "" && n.Line == 0 && n.Column == 0
+		n.HeadComment == "" && n.LineComment == "" && n.FootComment == "" && n.StartIndex == 0 && n.StartLine == 0 &&
+		n.StartColumn == 0 && n.EndIndex == 0 && n.EndLine == 0 && n.EndColumn == 0
 }
 
 // LongTag returns the long form of the tag that indicates the data type for
